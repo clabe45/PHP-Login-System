@@ -8,3 +8,4 @@ if (!defined('__FOOTER__'))
 
 ?>
 <a href="/php-login-system" id="home">e</a><!-- shows up on top; in footer for convenience -->
+<script src="script.js"></script>
