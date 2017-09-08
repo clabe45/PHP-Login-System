@@ -8,7 +8,8 @@ require_once "inc/config.php";
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+  <title>Home | Example</title>
 </head>
 <body>
 

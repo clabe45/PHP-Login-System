@@ -84,6 +84,17 @@ button:hover {
 input:focus, button:focus {
   box-shadow: 0 0 5px #04E824;
 }
+.error {
+  background-color: rgba(255,0,0,0.5);
+}
+.success {
+  background-color: rgba(0,255,0,0.5);
+}
+.error, .success {
+  margin-top: 10px;
+  padding: 16px;
+  display: none;
+}
 ::selection {
   background: #4FFF4F;
   color: white;

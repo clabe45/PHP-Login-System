@@ -8,7 +8,7 @@ include_once "inc/config.php";
 <!DOCTYPE html>
 <html>
 <head>
-
+  
 </head>
 <body>
 

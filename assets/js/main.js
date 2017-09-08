@@ -1,6 +1,6 @@
 window.addEventListener('load', function() {
-  var contentArea = document.getElementById('content-area');
-  (function refresh() {
+  // refresh loop
+  /*(function refresh() {
     var request;
     if (window.XMLHttpRequest) // newer browsers
       request = new XMLHttpRequest();
@@ -20,5 +20,5 @@ window.addEventListener('load', function() {
     // request.send();
 
     setTimeout(refresh, 4000);
-  })();
+  })();*/
 });

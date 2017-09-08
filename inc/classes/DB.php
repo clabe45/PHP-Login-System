@@ -13,17 +13,12 @@ class DB {
       self::$con->setAttribute(PDO::ATTR_PERSISTENT, false);
     } catch (PDOException $e) {
       echo '<pre>Could not connect to database :(</pre>';
-      exit;
     }
   }
 
   public static function getConnection() {
     if (!self::$con) new DB();  // start instance, if necessary
     return self::$con;
-  }
-
-  private function __destruct() {
-    self::$con = null;  // close connection (probably not necessary, but still...)
   }
 }
 ?>

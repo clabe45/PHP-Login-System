@@ -8,12 +8,17 @@ require_once 'inc/config.php';
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+  <title>Sign Up | Example</title>
 </head>
 <body>
   <h1>Register</h1>
-  <form>
+  <form id="register-form">
     <table>
+      <tr>
+        <td><label for="name">Full name: </label></td>
+        <td><input id="name" required="required" placeholder="Joe Smith"/></td>
+      </tr>
       <tr>
         <td><label for="username">Username: </label></td>
         <td><input id="username" required="required" placeholder="jsmith101"/></td>
@@ -35,9 +40,12 @@ require_once 'inc/config.php';
         <td><button type="submit"><strong>Sign up</strong></button></td>
       </tr>
     </table>
+    <div class="success"></div>
+    <div class="error"></div>
   </form>
 
   <?php require_once 'inc/footer.php'; ?>
+  <script src="assets/js/register.js"></script>
 
 </body>
 </html>
