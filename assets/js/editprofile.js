@@ -1,24 +1,15 @@
 window.addEventListener('load', function() {
-  var loginForm = document.getElementById('register-form');
-
-  loginForm.addEventListener('submit', function(event) {
+  var form = document.getElementById('edit-form');
+  form.addEventListener('submit', function(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    var table = this.children[0]; // <table>
-    var successDiv = this.children[1]; // <div class="success">
-    var errorDiv = this.children[2];  // <div class="error">
-
+    var inputs = this.getElementsByTagName('input');
     var data = {
-      name: table.getElementsByTagName('input')[0].value,
-      username: table.getElementsByTagName('input')[1].value,
-      email: table.getElementsByTagName('input')[2].value,
-      password: table.getElementsByTagName('input')[3].value,
-      confirmPassword: table.getElementsByTagName('input')[4].value
+      'name': inputs[0].value,
+      'username': inputs[1].value,
+      'email': inputs[2].value
     };
-
-    successDiv.style.display = 'none';
-    errorDiv.style.display = 'none';
 
     // form validation
     if (data.name.split(' ').length != 2) {  // isn't two words
@@ -35,16 +26,8 @@ window.addEventListener('load', function() {
       showError("Please enter a valid email address!");
       return;
     }
-    if (data.password.length < 11) {
-      showError("Please enter a passphrase that is at least <u>11</u> characters long.");
-      return;
-    }
-    if (data.password !== data.confirmPassword) {
-      showError("Passwords do not match.");
-      return;
-    }
 
-    // AJAX !!!
+    // send AJAX
     var request;
     if (window.XMLHttpRequest) // newer browsers
       request = new XMLHttpRequest();
@@ -60,6 +43,7 @@ window.addEventListener('load', function() {
           } catch (e) {
             document.write(this.responseText);
           }
+          console.log(response);
           if (response.error) showError(response.error);
           else {
             /*
@@ -68,34 +52,17 @@ window.addEventListener('load', function() {
              */
             if (response.redirect) {
               var url = response.redirect;
-              url = url+(url.indexOf('?')===-1 ? '?' : '&' )+'success=register';  // append 'success' switch
+              url = url+(url.indexOf('?')===-1 ? '?' : '&' )+'success=edit';  // append 'success' switch
               window.location.replace(url);
             }
           }
         } else {
-          showError('Error comminucating with server: error ' + this.status);
+          showError('Error sending data: error' + this.status);
         }
       }
     };
-    request.open('POST', 'ajax/register.php', true);
+    request.open('POST', 'ajax/editprofile.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
     request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
-
-    function showError(message) {
-      errorDiv.innerHTML = message;
-      errorDiv.style.display = 'block';
-
-      setTimeout(function() {
-        errorDiv.style.display = 'none';
-      }, 100*message.length);
-    }
-    function showSuccess(message) {
-      successDiv.innerHTML =  message;
-      successDiv.style.display = 'block';
-
-      setTimeout(function() {
-        successDiv.style.display = 'none';
-      }, 100*message.length);
-    }
   });
 });

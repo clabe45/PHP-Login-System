@@ -19,7 +19,10 @@ require_once "inc/config.php";
   <!-- "Optional": may be used, or may be not used -->
   <!-- Formatting likewise to keep |innerHTML| down to an "" -->
   <div class="fixed success"><?php
-      if (isset($_GET['success'])) echo "Account successfully created!";
+      if (isset($_GET['success'])) {
+        if ($_GET['success'] == 'account')  echo "Account successfully created!";
+        else if ($_GET['success'] == 'edit')  echo "Profile data successfully changed";
+      }
   ?></div>
 
   </div>

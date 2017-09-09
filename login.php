@@ -11,7 +11,7 @@ forceHome();
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
-  <title>Login | Example</title>
+  <title>Log in | Example</title>
 </head>
 <body>
   <h1>Log in</h1>

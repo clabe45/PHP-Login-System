@@ -22,9 +22,12 @@ $user = $getUser->fetch(PDO::FETCH_ASSOC);
 <body>
   <h1><?php echo $user['username']; ?></h1>
   <h3 style="margin-left: 64px;"><?php echo $user['name']; ?></h3>
+  <a style="margin-left:100px" href="editprofile.php">Edit</a>
   <div id="content-area">
   <?php
 
+    echo "Email: " . $user['email'] . "<br>";
+    echo "Joined: " . time_ago($user['reg_time']);
 
 
   ?>

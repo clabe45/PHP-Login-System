@@ -16,4 +16,6 @@ include_once "classes/DB.php";
 
 $con = DB::getConnection();
 
+date_default_timezone_set('America/New_York');
+
 ?>
