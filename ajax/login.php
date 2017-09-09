@@ -35,7 +35,7 @@ if ($findUser != null) {
   if (password_verify($password, $hash)) {
     // password matches what's stored in the db
     $_SESSION['user_id'] = $user_id;
-    $return['redirect'] = 'dashboard.php';
+    $return['redirect'] = '.';  // redirect to home page
   } else {
     // password does not match
     $return['error'] = 'Wrong username or password';  // make it ambiguous so that it's more secure

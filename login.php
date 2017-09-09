@@ -3,6 +3,8 @@
 define('__CONFIG__', true); // authentication for config.php
 require_once "inc/config.php";
 
+forceHome();
+
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +30,7 @@ require_once "inc/config.php";
         <td><button type="submit"><strong>Log in</strong></button></td>
       </tr>
     </table>
+    Don't have an account? <a class="special" href="register.php">Sign up</a>
     <div class="success"></div>
     <div class="error"></div>
   </form>

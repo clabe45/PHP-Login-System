@@ -11,6 +11,7 @@ if (!isset($_SESSION)) session_start();
 // start config
 define('__FOOTER__', true);
 
+include_once "functions.php";
 include_once "classes/DB.php";
 
 $con = DB::getConnection();

@@ -13,13 +13,29 @@ require_once "inc/config.php";
 </head>
 <body>
 
-  <h1>Welcome!</h1><br>
-  <div class="top">
-    <a href="login.php">Log in</a> or <a class="special" href="register.php">Sign up</a>
+  <?php
+    if (isset($_GET['message']) && $_GET['message'] == 'welcome') echo "<h1>Welcome to Example!</h1>";
+  ?>
+  <!-- "Optional": may be used, or may be not used -->
+  <!-- Formatting likewise to keep |innerHTML| down to an "" -->
+  <div class="fixed success"><?php
+      if (isset($_GET['success'])) echo "Account successfully created!";
+  ?></div>
+
   </div>
   <div id="content-area">
-    This is an example website. Normally, there is content here.
+  <?php
+
+  if (isset($_SESSION['user_id'])) {
+    echo "You are logged in!";
+  } else {
+    echo "You are not logged in";
+  }
+
+  ?>
   </div>
+
+  <script src="assets/js/index.js"></script>
 
   <?php require_once "inc/footer.php"; ?>
 

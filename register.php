@@ -3,6 +3,8 @@
 define('__CONFIG__', true); // authentication for config.php
 require_once 'inc/config.php';
 
+forceHome();
+
 ?>
 
 <!DOCTYPE html>
