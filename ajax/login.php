@@ -12,23 +12,23 @@ $_POST = json_decode($rest_json, true);
 $return = array();  // all response data
 
 $password = $_POST['password'];
-$usernameOrEmail = filter_var($_POST['usernameOrEmail'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);  // change to FILTER_SANITIZE_EMAIL?
+$username_or_email = filter_var($_POST['username_or_email'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);  // change to FILTER_SANITIZE_EMAIL?
 
-$findUserUsername = $con->prepare("SELECT user_id, password FROM users WHERE username = :username LIMIT 1");
-$findUserUsername->bindParam(':username', $usernameOrEmail, PDO::PARAM_STR);
-$findUserUsername->execute();
+$find_user_username = $con->prepare("SELECT user_id, password FROM users WHERE username = :username LIMIT 1");
+$find_user_username->bindParam(':username', $username_or_email, PDO::PARAM_STR);
+$find_user_username->execute();
 
-$findUserEmail = $con->prepare("SELECT user_id, password FROM users WHERE email = LOWER(:email) LIMIT 1");
-$findUserEmail->bindParam(':email', $usernameOrEmail, PDO::PARAM_STR);
-$findUserEmail->execute();
+$find_user_email = $con->prepare("SELECT user_id, password FROM users WHERE email = LOWER(:email) LIMIT 1");
+$find_user_email->bindParam(':email', $username_or_email, PDO::PARAM_STR);
+$find_user_email->execute();
 
-$findUser = $findUserUsername->rowCount() == 1 ?
-              $findUserUsername : ($findUserEmail->rowCount() == 1 ?
-                $findUserEmail : null);
+$find_user = $find_user_username->rowCount() == 1 ?
+              $find_user_username : ($find_user_email->rowCount() == 1 ?
+                $find_user_email : null);
 
-if ($findUser != null) {
+if ($find_user != null) {
   // user exists (whether it be selected using username or email)
-  $user = $findUser->fetch(PDO::FETCH_ASSOC);
+  $user = $find_user->fetch(PDO::FETCH_ASSOC);
 
   $user_id = (int)$user['user_id'];
   $hash = $user['password'];

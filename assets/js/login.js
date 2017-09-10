@@ -10,7 +10,7 @@ window.addEventListener('load', function() {
     var errorDiv = this.children[2];  // <div class="error">
 
     var data = {
-      usernameOrEmail: table.getElementsByTagName('input')[0].value,
+      username_or_email: table.getElementsByTagName('input')[0].value,
       password: table.getElementsByTagName('input')[1].value,
     };
 
@@ -53,22 +53,5 @@ window.addEventListener('load', function() {
     request.open('POST', 'ajax/login.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
     request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
-
-    function showError(message) {
-      errorDiv.innerHTML = message;
-      errorDiv.style.display = 'block';
-
-      setTimeout(function() {
-        errorDiv.style.display = 'none';
-      }, 100*message.length);
-    }
-    function showSuccess(message) {
-      successDiv.innerHTML =  message;
-      successDiv.style.display = 'block';
-
-      setTimeout(function() {
-        successDiv.style.display = 'none';
-      }, 100*message.length);
-    }
   });
 });

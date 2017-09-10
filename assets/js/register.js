@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
       username: table.getElementsByTagName('input')[1].value,
       email: table.getElementsByTagName('input')[2].value,
       password: table.getElementsByTagName('input')[3].value,
-      confirmPassword: table.getElementsByTagName('input')[4].value
+      confirm_password: table.getElementsByTagName('input')[4].value
     };
 
     successDiv.style.display = 'none';
@@ -39,12 +39,14 @@ window.addEventListener('load', function() {
       showError("Please enter a passphrase that is at least <u>11</u> characters long.");
       return;
     }
-    if (data.password !== data.confirmPassword) {
+    if (data.password !== data.confirm_password) {
       showError("Passwords do not match.");
       return;
     }
 
-    // AJAX !!!
+    delete data.confirm_password; // not needed in AJAX
+
+    // AJAX
     var request;
     if (window.XMLHttpRequest) // newer browsers
       request = new XMLHttpRequest();
