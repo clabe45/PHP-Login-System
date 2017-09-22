@@ -22,46 +22,11 @@ window.addEventListener('load', function() {
     setTimeout(refresh, 4000);
   })();*/
 
-  // for content from header.php
-  document.getElementById('search-box').addEventListener('input', function() {
-    var searchResults = document.getElementById('search-results');
-    var request;
-    if (window.XMLHttpRequest) // newer browsers
-      request = new XMLHttpRequest();
-    else if (window.ActiveXObject)  // older versions of IE
-      request = new ActiveXObject("Microsoft.XMLHTTP");
-    request.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE) {
-        if (this.status === 200) {
-          // success
-          // show and reset innerHTML
-          searchResults.style.display = 'inline';
-          while (searchResults.hasChildNodes()) {
-            searchResults.removeChild(searchResults.lastChild);
-          }
-          if (data.search.length > 0) {  // don't search empty string
-
-            var response;
-            try {
-              response = JSON.parse(this.responseText);  // parsed result (array, in this case)
-            } catch (e) {
-              document.write(this.responseText);  // error formatted as HTML (From PHP)
-            }
-            for (var i=0; i<response.length; i++) {
-              var user = response[i];
-              var child = document.createElement('a');  // search result div
-              child.className = 'search-result';
-              child.href = 'profile.php?user_id='+user.user_id;
-              child.innerHTML = user.username;
-              searchResults.appendChild(child);
-            }
-          }
-        } else {
-          // error
-        }
-      }
-    };
-
+  /*
+   *  FOR header.php
+   */
+  var searchBox = document.getElementById('search-box');
+  searchBox && searchBox.addEventListener('input', function() {
     var data = new Object();
     data.search = this.value;
     if (document.getElementById('search-users').checked) {
@@ -69,9 +34,64 @@ window.addEventListener('load', function() {
     } else {
       alert('error in main.js');
     }
+    ajax('search.php', data)
 
-    request.open('POST', 'ajax/search.php', true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
+    .then(function(response) {
+      // show and reset innerHTML
+      var searchResults = document.getElementById('search-results');
+      searchResults.style.display = 'inline';
+      while (searchResults.hasChildNodes()) {
+        searchResults.removeChild(searchResults.lastChild);
+      }
+      if (data.search.length > 0) {  // don't search empty string
+        for (var i=0; i<response.length; i++) {
+          var user = response[i];
+          var child = document.createElement('a');  // search result div
+          child.className = 'search-result';
+          child.href = 'profile.php?user_id='+user.user_id;
+          child.innerHTML = user.username;
+          searchResults.appendChild(child);
+        }
+      }
+    });
   });
+
+  var notifLink = document.getElementById('notifications-count');
+  if (notifLink && !(notifLink.innerHTML*1)) notifLink.className += notifLink.className?' ':'' + 'dull';
+  var notifBox = document.getElementById('notifications-box');
+  notifLink && notifLink.addEventListener('click', function() {
+    notifBox.style.display = 'block';
+    notifBox.focus();
+    getUser().then(function(user) {
+      ajax('view_all_notifications.php', {});
+      ajax('unviewed_notifications.php', {}).then(function(response) {
+        notifLink.innerHTML = response.count;
+      });
+    });
+  });
+  document.body.addEventListener('click', function(e) {
+    if (notifBox && !notifBox.contains(e.target) && !notifLink.contains(e.target)) {
+      // click is outside
+      notifBox.style.display = 'none';
+    }
+  });
+  /*notifBox.addEventListener('focusout', function() {
+    this.style.display = 'none';
+  }, /* useCapturing** true);*/
+  if (notifBox) notifBox.style.display = 'none';
+
+  // add event listeners (hard to this in html because it needs to pass event)
+  var links = notifBox ? notifBox.getElementsByTagName('a') : [];
+  for (var i=0; i<links.length; i++) {
+    links[i].addEventListener('click', viewNotification);
+  }
+
+
+
+  function viewNotification(event) {
+    ajax('view_notification.php', /*notification id*/{notification_id: event.target.dataset.id})     // first register notification view
+    .then(function() {
+      window.location.replace(event.target.dataset.href);     // and *then* redirect the user (programmatically)
+    });
+  }
 });

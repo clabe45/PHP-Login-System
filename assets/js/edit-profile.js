@@ -63,7 +63,7 @@ window.addEventListener('load', function() {
         }
       }
     };
-    request.open('POST', 'ajax/editprofile.php', true);
+    request.open('POST', 'ajax/edit_profile.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
     request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
   });
@@ -130,7 +130,7 @@ window.addEventListener('load', function() {
         }
       }
     };
-    request.open('POST', 'ajax/changepassword.php', true);
+    request.open('POST', 'ajax/change_password.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
     request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
   });

@@ -31,20 +31,63 @@ body {
   background-color: #505050;
   color: #CCFF66;
 }
+#notifications-count {
+  cursor: pointer;
+}
+#notifications-box {
+  position: fixed;
+  max-width: 200px;
+  max-height: 300px;
+  right: 0;
+  top: 60px;
+  padding: 10px;
+}
+#notifications-box:focus {
+  outline: none;
+}
+#notifications-box div.unread {
+  background-color: /*#ffc8c8*/#e2fffb;
+}
+#notifications-box div.read {
+  background-color: #e9e9e9;
+}
+#notifications-box div:hover {
+  background-color: #f0f0f0;
+}
+#notifications-box div a {
+  background-color: inherit;
+  color: grey;
+}
+/* A div above the #content-area */
+#inner-top {
+  position: fixed;
+  /* add on border sizes */
+  top: 62px;
+  left: 122px;
+  right: 0;
+  height: 50px;
+  padding-top: 6px;
+  padding-right: 12px;
+  background-color: #777;
+}
+#inner-top span {
+  float: right;
+  margin-top: 10px;
+  color: white;
+}
 #content-area {
   position: relative;
-  top: 60px; /* content is below #top */
-  left: 120px; /* content is to the right of #left */
+  top: 62px; /* content is below #top */
+  left: 122px; /* content is to the right of #left */
   padding: 25px;
+  padding-top: 45px;
   z-index: 0;
 }
 a#home {
   position: inherit;
   top: 12px;
   left: 12px;
-  color: #4FFF4F;
   background-color: rgba(0,0,0,0);
-  text-decoration: none;
 }
 #search-area {
   position: inherit;
@@ -116,16 +159,18 @@ input {
   outline: none;
 }
 button {
-  background-color: white;
-  color: #F21B3F;
-  border: 2px solid #F21B3F;
+  background-color: #00e673;
+  color: white;
+  border: none;
+  /*border: 2px solid #F21B3F;*/
   width: 100px;
   height: 40px;
   float: right;
   cursor: pointer;
+  font-family: "Trebuchet MS";
 }
 button:hover {
-  background-color: #F21B3F;
+  background-color: #00b359;
   color: white;
 }
 input:focus, button:focus {
@@ -150,6 +195,7 @@ input:focus, button:focus {
 .post {
   position: relative;
   background-color: #707070;  /* just darker than grey */
+  width: 750px;
   padding: 20px;
   margin-top: 30px;
 }
@@ -172,11 +218,14 @@ a.post-user:hover {
 }
 .post-content {
   display: block;
-  margin-right: 100px;
+  margin-right: 80px;
 }
 .post-timestamp {
   display: block;
   color: #A0A0A0;
+}
+.dull {
+  color: grey;
 }
 ::selection {
   /*background: #4FFF4F;*/

@@ -34,7 +34,7 @@ if ($find_user != null) {
   $hash = $user['password'];
   if (password_verify($password, $hash)) {
     // password matches what's stored in the db
-    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_id'] = (int)$user_id;
     $return['redirect'] = '.';  // redirect to home page
   } else {
     // password does not match

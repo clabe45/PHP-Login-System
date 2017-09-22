@@ -1,19 +1,11 @@
 <?php
 
-// redirect user if not logged in
-function forceLogIn() {
-  if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-  }
+// private (used in above function)
+function friend_request_accepted($friendship) {
+  return $friendship['accept_time'] != null;
 }
 
-// redirect user if logged in
-function forceHome() {
-  if (isset($_SESSION['user_id'])) header("Location: ."); // navigate to pseudo-root
-}
-
-// displays a timestamp as "3 years 5 months ago" or "20 seconds ago"
+// returns a string as "3 years 5 months ago" or "20 seconds ago", from the given time stirng
 // from http://www.mdj.us/web-development/php-programming/another-variation-on-the-time-ago-php-function-use-mysqls-datetime-field-type/
 function time_ago($date, $granularity=2) {
   $date = strtotime($date);

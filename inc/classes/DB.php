@@ -16,7 +16,7 @@ class DB {
     }
   }
 
-  public static function getConnection() {
+  public static function get_connection() {
     if (!self::$con) new DB();  // start instance, if necessary
     return self::$con;
   }

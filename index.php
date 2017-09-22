@@ -1,3 +1,4 @@
+<!-- PUBLIC/PRIVATE --><!-- this means the user is not redirected if not logged in - or if logged in -->
 <?php
 
 define('__CONFIG__', true); // authentication for config.php
@@ -46,6 +47,7 @@ require_once "inc/config.php";
     if (isset($_GET['message']) && $_GET['message'] == 'welcome') echo "<h1>Welcome to {sitename}!</h1>";
 
     if (isset($_SESSION['user_id'])) {
+      new User($_SESSION['user_id'], true); // log user out if doens't exist
       // user is logged in: this is where things happen
 
       echo
