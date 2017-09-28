@@ -28,8 +28,7 @@
   <div id="top-right">
   <?php if (!Page::logged_in()) { ?>
     <a href="login">Log in</a> or <a class="special" href="register">Sign up</a>
-  <?php } else { ?>
-    <span id="notifications-count"><?php
+  <?php } else {
         // count how many notifications were created after last_time_viewed_notifications
         $count = 0;
         foreach($current_user->get_notifications() as $notif) {
@@ -37,8 +36,9 @@
             $count++;
           }
         }
-        echo $count;
-    ?></span>
+        $class = $count ? "" : "dull";
+        echo "<span id='notifications-count' class='$class'>$count</span>";
+    ?>
     <div id="notifications-box" tabindex="-1">
       <?php require_once "inc/notifications.php" ?>
     </div>

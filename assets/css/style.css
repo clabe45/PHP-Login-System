@@ -36,11 +36,11 @@ body {
 }
 #notifications-box {
   position: fixed;
-  max-width: 200px;
+  max-width: 250px;
   max-height: 300px;
   right: 0;
   top: 60px;
-  padding: 10px;
+  /*padding: 10px;*/
 }
 #notifications-box:focus {
   outline: none;
@@ -75,14 +75,6 @@ body {
   margin-top: 10px;
   color: white;
 }
-#content-area {
-  position: relative;
-  top: 62px; /* content is below #top */
-  left: 122px; /* content is to the right of #left */
-  padding: 25px;
-  padding-top: 45px;
-  z-index: 0;
-}
 a#home {
   position: inherit;
   top: 12px;
@@ -114,6 +106,14 @@ a.search-result {
 }
 #search-area input[type="radio"]:checked + label {
   background-color: grey;
+}
+#content-area {
+  position: absolute;
+  top: 62px; /* content is below #top */
+  left: 122px; /* content is to the right of #left */
+  padding: 25px;
+  /*padding-top: 45px;*/
+  z-index: 0;
 }
 h1 {
   background-color: #08BDBD;
@@ -177,10 +177,10 @@ input:focus, button:focus {
   box-shadow: 0 0 5px #04E824;
 }
 .error {
-  background-color: rgba(255,0,0,0.5);
+  background-color: rgba(255, 0, 43, 0.5);
 }
 .success {
-  background-color: rgba(0,255,0,0.5);
+  background-color: rgba(0, 255, 43, 0.5);
 }
 .error, .success {
   margin-top: 10px;
@@ -189,6 +189,7 @@ input:focus, button:focus {
 }
 .fixed {
   position: fixed;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
 }

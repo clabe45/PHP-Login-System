@@ -1,26 +1,11 @@
 window.addEventListener('load', function() {
   // refresh loop
-  /*(function refresh() {
-    var request;
-    if (window.XMLHttpRequest) // newer browsers
-      request = new XMLHttpRequest();
-    else if (window.ActiveXObject)  // older versions of IE
-      request = new ActiveXObject("Microsoft.XMLHTTP");
-
-    request.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE) {
-        if (this.status === 200) {
-          contentArea.innerHTML = this.responseText;
-        } else {
-          throw new Error('Error fetching data: error ' + this.status);
-        }
-      }
-    }
-    request.open('GET', 'inc/functions', true);
-    // request.send();
+  (function refresh() {
+    if (document.getElementById('search-box')) // user is logged in
+      updateNumbNotifications();
 
     setTimeout(refresh, 4000);
-  })();*/
+  })();
 
   /*
    *  FOR header.php
@@ -63,11 +48,9 @@ window.addEventListener('load', function() {
     notifBox.style.display = 'block';
     notifBox.focus();
     getUser().then(function(user) {
-      ajax('view_all_notifications.php', {});
-      ajax('unviewed_notifications.php', {}).then(function(response) {
-        notifLink.innerHTML = response.count;
-      });
+      ajax('view_all_notifications.php', {}); // make all notifications "viewed" by updating user's last_time_viewed_notifications
     });
+    updateNumbNotifications();
   });
   document.body.addEventListener('click', function(e) {
     if (notifBox && !notifBox.contains(e.target) && !notifLink.contains(e.target)) {
@@ -86,10 +69,16 @@ window.addEventListener('load', function() {
     links[i].addEventListener('click', viewNotification);
   }
 
-
+  function updateNumbNotifications() {
+    ajax('unviewed_notifications.php', {}).then(function(response) {
+      notifLink.innerHTML = response.count;
+      if (response.count == 0 && notifLink.className.indexOf('dull')===-1) notifLink.className += notifLink.className?' ':'' + 'dull';
+      else if (response.count > 0) notifLink.className = notifLink.className.replace(/ ?dull/, '');
+    });
+  }
 
   function viewNotification(event) {
-    ajax('view_notification.php', /*notification id*/{notification_id: event.target.dataset.id})     // first register notification view
+    ajax('click_notification.php', /*notification id*/{notification_id: event.target.dataset.id})     // first register notification view
     .then(function() {
       window.location.replace(event.target.dataset.href);     // and *then* redirect the user (programmatically)
     });

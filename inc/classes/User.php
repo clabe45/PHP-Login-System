@@ -42,7 +42,7 @@ class User {
    * @return array associative array of all types of notifications, each being another array (representing lists)
    */
   public function get_notifications() {
-    $get_notifs = $this->con->prepare("SELECT * FROM notifications WHERE recipient_id = :recipient_id");
+    $get_notifs = $this->con->prepare("SELECT * FROM notifications WHERE recipient_id = :recipient_id ORDER BY notification_id DESC");
     $get_notifs->bindParam(":recipient_id", $this->user_id, PDO::PARAM_INT);
     $get_notifs->execute();
 

@@ -8,7 +8,7 @@ function friend_request_accepted($friendship) {
 // returns a string as "3 years 5 months ago" or "20 seconds ago", from the given time stirng
 // from http://www.mdj.us/web-development/php-programming/another-variation-on-the-time-ago-php-function-use-mysqls-datetime-field-type/
 function time_ago($date, $granularity=2) {
-  $date = strtotime($date);
+  if (is_string($date)) $date = strtotime($date);
   $diff = time() - $date; // time delta from now
   $periods = array(         // each time unit in seconds
     'decade' => 315360000,

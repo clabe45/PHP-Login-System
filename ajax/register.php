@@ -11,34 +11,23 @@ $_POST = json_decode($rest_json, true);
 
 $return = array();  // all response data
 
-$email = filter_var($_POST['email'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);  // change to FILTER_SANITIZE_EMAIL?
+$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+$email = filter_var($_POST['email'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-// make sure the user doesn't exit
-$find_user = $con->prepare("SELECT user_id FROM users WHERE email = LOWER(:email) LIMIT 1");
-$find_user->bindParam(':email', $email, PDO::PARAM_STR);
-$find_user->execute();
+// insert user into `users` table
+$add_user = $con->prepare("INSERT INTO users(username, name, email, password) VALUES (:username, :name, LOWER(:email), :password)");
+$add_user->bindParam(":username", $username, PDO::PARAM_STR);
+$add_user->bindParam(":name", $name, PDO::PARAM_STR);
+$add_user->bindParam(":email", $email, PDO::PARAM_STR);
+$add_user->bindParam(":password", $password, PDO::PARAM_STR);
+$add_user->execute();
 
-if ($find_user->rowCount() == 1) {
-  // user exists
-  $return['error'] = "You already have an account";
-} else {
-  $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-  $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-  $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$user_id = $con->lastInsertId();
 
-  // insert user into `users` table
-  $add_user = $con->prepare("INSERT INTO users(username, name, email, password) VALUES (:username, :name, LOWER(:email), :password)");
-  $add_user->bindParam(":username", $username, PDO::PARAM_STR);
-  $add_user->bindParam(":name", $name, PDO::PARAM_STR);
-  $add_user->bindParam(":email", $email, PDO::PARAM_STR);
-  $add_user->bindParam(":password", $password, PDO::PARAM_STR);
-  $add_user->execute();
-
-  $user_id = $con->lastInsertId();
-
-  $_SESSION['user_id'] = (int)$user_id;
-  $return['redirect'] = '.?message=welcome';
-}
+$_SESSION['user_id'] = (int)$user_id; // log user in
+$return['redirect'] = '.?message=welcome&success=account';
 
 echo json_encode($return, JSON_PRETTY_PRINT);
 

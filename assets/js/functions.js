@@ -27,6 +27,7 @@ function ajax(filename, data) {
             response = JSON.parse(this.responseText);  // parsed result
           } catch (e) {
             document.write(this.responseText);
+            console.log("error parsing response json");
             reject && reject(this.responseText);
           }
           if (response.error) showError(response.error);
@@ -38,9 +39,7 @@ function ajax(filename, data) {
              * (prepend root directory, because we're on localhost)
              */
             if (response.redirect) {
-              var url = response.redirect;
-              url = url+(url.indexOf('?')===-1 ? '?' : '&' )+'success=edit';  // append 'success' value
-              window.location.replace(url);
+              window.location.replace(response.redirect);
             }
           }
         } else {

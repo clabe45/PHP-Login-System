@@ -23,22 +23,27 @@ Page::force_home();
         <tr>
           <td><label for="name">Full name: </label></td>
           <td><input id="name" required="required" placeholder="Joe Smith"/></td>
+          <td></td><!-- for extra info -->
         </tr>
         <tr>
           <td><label for="username">Username: </label></td>
           <td><input id="username" required="required" placeholder="jsmith101"/></td>
+          <td></td><!-- for extra info -->
         </tr>
         <tr>
           <td><label for="email">Email: </label></td>
           <td><input type="email" id="email" required="required" placeholder="email@example.com"/></td>
+          <td><em style="color: grey"><span style="color:#990099">*</span> this will not be shown to the public</em></td>
         </tr>
         <tr>
           <td><label for="password">Password: </label></td>
           <td><input type="password" required="required" id="password"/></td>
+          <td></td><!-- for extra info -->
         </tr>
         <tr>
           <td><label for="password-confirm">Confirm: </label></td>
           <td><input type="password" required="required" id="password-confirm"/></td>
+          <td></td><!-- for extra info -->
         </tr>
         <tr>
           <td></td>

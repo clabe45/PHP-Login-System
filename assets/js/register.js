@@ -46,58 +46,18 @@ window.addEventListener('load', function() {
 
     delete data.confirm_password; // not needed in AJAX
 
-    // AJAX
-    var request;
-    if (window.XMLHttpRequest) // newer browsers
-      request = new XMLHttpRequest();
-    else if (window.ActiveXObject)  // older versions of IE
-      request = new ActiveXObject("Microsoft.XMLHTTP");
-    request.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE) {
-        if (this.status === 200) {
-          // success
-          var response;
-          try {
-            response = JSON.parse(this.responseText);  // parsed result
-          } catch (e) {
-            document.write(this.responseText);
-          }
+    ajax('user_exists.php', {type: 'username', arg: data.username})
+    .then(function(response){
+      if (response.error) showError(response.error);
+      else {
+        ajax('user_exists.php', {type: 'email', arg: data.email})
+        .then(function(response){
           if (response.error) showError(response.error);
           else {
-            /*
-             * redirect if necessary
-             * (prepend root directory, because we're on localhost)
-             */
-            if (response.redirect) {
-              var url = response.redirect;
-              url = url+(url.indexOf('?')===-1 ? '?' : '&' )+'success=register';  // append 'success' switch
-              window.location.replace(url);
-            }
+            ajax('register.php', data);
           }
-        } else {
-          showError('Error comminucating with server: error ' + this.status);
-        }
+        })
       }
-    };
-    request.open('POST', 'ajax/register.php', true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    request.send(JSON.stringify(data)); // send post data as json (don't worry, my PHP code will handle it)
-
-    function showError(message) {
-      errorDiv.innerHTML = message;
-      errorDiv.style.display = 'block';
-
-      setTimeout(function() {
-        errorDiv.style.display = 'none';
-      }, 100*message.length);
-    }
-    function showSuccess(message) {
-      successDiv.innerHTML =  message;
-      successDiv.style.display = 'block';
-
-      setTimeout(function() {
-        successDiv.style.display = 'none';
-      }, 100*message.length);
-    }
+    });
   });
 });
